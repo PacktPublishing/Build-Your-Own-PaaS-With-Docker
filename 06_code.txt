@@ -1,0 +1,76 @@
+----------------------------------------------------
+sudo apt-get install haproxy
+sudo yum install haproxy
+----------------------------------------------------
+
+haproxy -f /etc/haproxy/docker.cfg -c
+
+----------------------------------------------------
+
+haproxy -f /etc/haproxy/docker.cfg -D
+
+----------------------------------------------------
+
+ps aux | grep haproxy
+netstat -a | grep http
+
+----------------------------------------------------
+
+cd..
+cp -r crane-wp crane-wp2
+cd crane-wp2
+sed -i "s/wp/wp2/g" crane.yaml
+sed -i "s/mydata/mydata2/g" crane.yaml
+sed -i "s/mymysql/mymysql2/g" crane.yaml
+crane lift data_db
+crane lift wp2
+
+#check out port for new container named wp2
+docker ps
+
+----------------------------------------------------
+
+sudo /etc/init.d/haproxy restart
+
+----------------------------------------------------
+
+sudo haproxy -f /etc/haproxy/docker.cfg -p /var/run/haproxy.pid -sf $(cat /var/run/haproxy.pid)
+
+
+----------------------------------------------------
+
+sudo apt-get install nginx
+sudo yum install nginx
+
+----------------------------------------------------
+
+sudo /etc/init.d/nginx configtest
+sudo /etc/init.d/nginx restart
+
+----------------------------------------------------
+
+sudo cp /etc/nginx/conf.d/wp1.conf /etc/nginx/conf.d/wp2.conf
+sudo sed -i "s/wp1/wp2/g" /etc/nginx/conf.d/wp2.conf
+sudo sed -i "s/domain1/domain2/g" /etc/nginx/conf.d/wp2.conf
+sudo sed -i "s/49187/49188/g" /etc/nginx/conf.d/wp2.conf
+
+#test config
+sudo /etc/init.d/nginx configtest
+
+#reload config
+sudo /etc/init.d/nginx reload
+
+
+----------------------------------------------------
+
+/etc/init.d/nginx stop
+
+----------------------------------------------------
+
+docker run -d -p 80:80 -v /var/run/docker.sock:/tmp/docker.sock jwilder/nginx-proxy
+
+----------------------------------------------------
+
+crane lift web --recreate
+
+----------------------------------------------------

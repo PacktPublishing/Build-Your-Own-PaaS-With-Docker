@@ -1,0 +1,38 @@
+docker run --name some-mysql -e MYSQL_ROOT_PASSWORD=mysecretpassword -d mysql
+
+docker run --name some-wordpress --link some-mysql:mysql -d -p 80 wordpress
+
+--------------------------------
+
+docker build -t mod-wp .
+
+--------------------------------
+
+docker build -t mod-wp:lastest .
+
+--------------------------------
+docker run --name some-mysql -e MYSQL_ROOT_PASSWORD=mysecretpassword -d mysql
+docker run --name some-wordpress --link some-mysql:mysql -d -p 80 mod-wp:latest
+
+--------------------------------
+git clone git@github.com:yourusername/my-docker-images.git
+
+--------------------------------
+cd my-docker-images
+git checkout -b wordpress
+cp ../wordpress-master/*.* .
+cp ../wordpress-master/Dockerfile .
+git add .
+git commit -m “Adding new files.”
+git push origin wordpress
+
+
+--------------------------------
+docker pull oskarhane/wordpress
+docker images
+
+docker run --name mysql -e MYSQL_ROOT_PASSWORD=mysecretpassword -d mysql
+
+docker run --name my-wordpress --link mysql:mysql -d -p 80 oskarhane/wordpress
+
+docker ps

@@ -1,0 +1,36 @@
+--------------------------------
+
+git checkout -b data
+vi Dockerfile
+git add Dockerfile
+
+--------------------------------
+
+docker build -t data-test .
+
+--------------------------------
+
+git commit -m “Dockerfile for data volume added.”
+git push origin data
+
+--------------------------------
+
+docker run -d oskarhane/data true
+
+--------------------------------
+
+docker run -d oskarhane/data tail -f /dev/null
+
+--------------------------------
+
+docker build -t case:latest .
+
+--------------------------------
+
+docker run -i case
+docker run -i -e STR="My String" case
+docker run -i -e STR="My String" -e TO_CASE=camel case
+docker run -i -e STR="My String" -e TO_CASE=upper case
+docker run -i -e STR="My String" -e TO_CASE=lower case
+
+--------------------------------

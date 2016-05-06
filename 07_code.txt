@@ -1,0 +1,106 @@
+---------------------------------------------------------------------------
+
+cd /tmp
+git clone https://github.com/progrium/dokku.git
+cd dokku
+sudo make install
+dokku version
+
+
+---------------------------------------------------------------------------
+
+cd ~/.ssh
+ssh-keygen -t rsa
+#I named my key pair id_rsa
+cat id_rsa.pub
+#copy the output so you have it in your clipboard
+
+
+---------------------------------------------------------------------------
+
+#As your ubuntu user
+#Replace <publickey> with the key you just copied
+#<remoteuser> can be replaced with anything, like "remoteuser".
+echo "<publickey>" | sudo sshcommand acl-add dokku <remoteuser>
+
+
+---------------------------------------------------------------------------
+
+#Clone the repo
+git clone git@github.com:heroku/node-js-sample.git
+cd node-js-sample
+
+#Add a Dokku git remote
+git remote add dokku dokku@server.com:first-app
+
+#Push to Dokku
+git push dokku master
+
+
+---------------------------------------------------------------------------
+
+nano public/index.html
+#paste the HTML
+#save the file
+
+#commit you changes
+git add public/index.html
+git commit -m "Added first HTML page."
+
+#push to dokku
+git push dokku master
+
+
+---------------------------------------------------------------------------
+
+#Download Wordpress
+curl -O https://wordpress.org/latest.zip
+unzip latest.zip
+mv wordpress wp1
+cd wp1
+
+#Create a new Git repo
+git init
+git add .
+git commit -m "Initial commit."
+
+#Create a composer.json file to tell Dokku we are using php
+echo '{}' > composer.json
+git add .
+git commit -am "Add composer.json for PHP app detection."
+
+#Add a remote so we can push to Dokku
+git remote add dokku dokku@ohdokku.com:wp1
+
+
+---------------------------------------------------------------------------
+
+cd /var/lib/dokku/plugins
+sudo git clone --recursive https://github.com/Kloadut/dokku-md-plugin mariadb
+cd mariadb/dockerfiles/
+git checkout master
+cd ../../
+sudo dokku plugins-install
+
+
+---------------------------------------------------------------------------
+
+git push dokku master
+
+---------------------------------------------------------------------------
+
+ssh dokku@ohdokku.com mariadb:create wp1_db
+ssh dokku@ohdokku.com mariadb:link wp1 wp1_db
+
+---------------------------------------------------------------------------
+
+git add -A .
+git commit -m "Add wp-config.php and add credentials."
+git push dokku master
+
+
+---------------------------------------------------------------------------
+
+sudo nano /etc/hosts
+
+---------------------------------------------------------------------------

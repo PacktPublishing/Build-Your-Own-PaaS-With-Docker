@@ -1,0 +1,60 @@
+----------------------------------------------------
+
+docker run -d --name data-one oskarhane/data tail -f /dev/null
+
+docker run --name mysql-one --volumes-from data-one -e MYSQL_ROOT_PASSWORD=mysecretpassword -d mysql
+
+docker run --name wordpress-one --volumes-from data-one --link mysql-one:mysql -d -p 80 oskarhane/wordpress
+
+
+----------------------------------------------------
+
+docker exec -i -t data-one /bin/sh
+
+----------------------------------------------------
+
+ls -la /var/www/html
+ls -la /var/lib/mysql
+
+----------------------------------------------------
+
+sudo su
+wget https://bootstrap.pypa.io/get-pip.py && python ./get-pip.py
+
+----------------------------------------------------
+
+sudo pip install -U docker-compose
+docker-compose --version
+
+----------------------------------------------------
+
+mkdir docker-compose-wp && cd $_
+touch docker-compose.yml
+
+
+----------------------------------------------------
+
+bash -c "`curl -sL https://raw.githubusercontent.com/michaelsauter/crane/master/download.sh`" && sudo mv crane /usr/local/bin/crane
+
+----------------------------------------------------
+
+crane lift
+
+----------------------------------------------------
+
+crane status
+
+----------------------------------------------------
+
+crane logs wp
+
+----------------------------------------------------
+
+crane lift data_db --recreate
+crane status data_db
+crane lift web --recreate
+
+----------------------------------------------------
+
+
+----------------------------------------------------

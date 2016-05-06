@@ -1,0 +1,10 @@
+docker run --name some-mysql -e MYSQL_ROOT_PASSWORD=mysecretpassword -d mysql
+----------------------------------------------
+docker run --name some-wordpress --link some-mysql:mysql -p 80 -d wordpress
+----------------------------------------------
+docker rm some-wordpress
+----------------------------------------------
+docker ps
+----------------------------------------------
+docker port some-wordpress 80
+----------------------------------------------
