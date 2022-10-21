@@ -15,3 +15,7 @@ The minimum requirements for this project are as follows:
 * [Orchestrating Docker](https://www.packtpub.com/virtualization-and-cloud/orchestrating-docker?utm_source=github&utm_medium=repository&utm_campaign=9781783984787)
 * [Learning Docker](https://www.packtpub.com/virtualization-and-cloud/learning-docker?utm_source=github&utm_medium=repository&utm_campaign=9781784397937)
 * [Docker Cookbook](https://www.packtpub.com/virtualization-and-cloud/docker-cookbook?utm_source=github&utm_medium=repository&utm_campaign=9781783984862)
+### Download a free PDF
+
+ <i>If you have already purchased a print or Kindle version of this book, you can get a DRM-free PDF version at no cost.<br>Simply click on the link to claim your free PDF.</i>
+<p align="center"> <a href="https://packt.link/free-ebook/9781784393946">https://packt.link/free-ebook/9781784393946 </a> </p>
